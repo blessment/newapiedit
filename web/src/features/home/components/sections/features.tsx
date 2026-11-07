@@ -42,6 +42,7 @@ export function Features(_props: FeaturesProps) {
         'Optimized network architecture ensures millisecond response times'
       ),
       span: 'md:col-span-2',
+      tone: 'bg-info/10 ring-info/15',
       icon: <Zap className='size-4 text-info' />,
       visual: (
         <div className='mt-4 grid grid-cols-3 gap-2'>
@@ -66,6 +67,7 @@ export function Features(_props: FeaturesProps) {
         'Enterprise-grade security with comprehensive permission management'
       ),
       span: 'md:col-span-1',
+      tone: 'bg-success/10 ring-success/15',
       icon: <Shield className='size-4 text-success' />,
       visual: (
         <div className='mt-4 flex items-center justify-center'>
@@ -101,6 +103,7 @@ export function Features(_props: FeaturesProps) {
       title: t('Global Coverage'),
       desc: t('Multi-region deployment for stable global access'),
       span: 'md:col-span-1',
+      tone: 'bg-violet-500/10 ring-violet-500/15',
       icon: <Globe className='size-4 text-violet-400' />,
       visual: (
         <div className='mt-4 space-y-2'>
@@ -130,6 +133,7 @@ export function Features(_props: FeaturesProps) {
       title: t('Developer Friendly'),
       desc: t('Compatible API routes for common AI application workflows'),
       span: 'md:col-span-2',
+      tone: 'bg-warning/10 ring-warning/15',
       icon: <Code className='size-4 text-warning' />,
       visual: (
         <div className='mt-4 flex items-center gap-3'>
@@ -137,7 +141,7 @@ export function Features(_props: FeaturesProps) {
             {['API', 'SDK', 'CLI', 'Docs'].map((n) => (
               <div
                 key={n}
-                className='border-background from-muted to-muted/60 text-muted-foreground flex size-8 items-center justify-center rounded-full border-2 bg-gradient-to-br text-[9px] font-bold'
+                className='ring-background from-muted to-muted/60 text-muted-foreground flex size-8 items-center justify-center rounded-full bg-gradient-to-br ring-2 text-[9px] font-bold'
               >
                 {n}
               </div>
@@ -167,18 +171,23 @@ export function Features(_props: FeaturesProps) {
           </h2>
         </AnimateInView>
 
-        {/* Bento grid */}
-        <div className='border-border/40 bg-border/40 grid gap-px overflow-hidden rounded-xl border md:grid-cols-3'>
+        {/* Soft-UI bento: independent raised cards, wide gutters */}
+        <div className='grid gap-6 md:grid-cols-3 md:gap-8'>
           {features.map((f, i) => (
             <AnimateInView
               key={f.id}
               delay={i * 100}
               animation='scale-in'
-              className={`bg-background group hover:bg-muted/20 p-7 transition-colors duration-300 md:p-8 ${f.span}`}
+              className={`bg-card ring-foreground/6 group relative rounded-xl p-7 shadow-lg shadow-foreground/6 ring-1 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-foreground/8 md:p-8 ${f.span}`}
             >
-              <div className='mb-3 flex items-center gap-3'>
-                <span className='border-border/40 bg-muted text-muted-foreground flex size-7 items-center justify-center rounded-md border text-[10px] font-semibold tabular-nums'>
-                  {f.num}
+              <span className='text-muted-foreground/40 absolute top-6 right-6 text-[10px] font-semibold tabular-nums'>
+                {f.num}
+              </span>
+              <div className='mb-4 flex items-center gap-3'>
+                <span
+                  className={`flex size-10 items-center justify-center rounded-full ring-1 ${f.tone}`}
+                >
+                  {f.icon}
                 </span>
                 <h3 className='text-sm font-semibold'>{f.title}</h3>
               </div>

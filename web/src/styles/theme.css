@@ -95,10 +95,9 @@ For commercial licensing, please contact support@quantumnous.com
 }
 
 :root {
-  // Default radius tuned for an admin console: shadcn-classic 0.5rem keeps
-  // buttons/inputs/cards clearly rounded without the chunky 1rem look that
-  // made several form controls and buttons feel oversized.
-  --radius: 0.5rem;
+  /* Soft-UI scale (option B): controls 12px, cards ~17px, panels ~22px.
+   * rounded-lg = 0.75rem, rounded-xl = 1.05rem, rounded-2xl = 1.35rem. */
+  --radius: 0.75rem;
   --app-header-height: 3rem;
   /* Static build-channel fallback consumed when JS hasn't booted yet. */
   --app-rev: '2k6e8r7p';
@@ -106,22 +105,23 @@ For commercial licensing, please contact support@quantumnous.com
    * saved preference. Explicit Sans selects Public Sans in theme-presets.css. */
   --font-ui-sans: sans-serif;
   --font-body: var(--font-ui-sans);
-  /* Quantum-cyan default: neutral canvas with a faint cyan-grey tilt.
-   * Hue 180 keeps surfaces cool without ever reading as blue. */
-  --background: oklch(0.985 0.003 180);
-  --foreground: oklch(0.18 0.006 180);
-  --card: oklch(0.945 0.006 180);
-  --card-foreground: oklch(0.18 0.006 180);
-  --popover: oklch(0.97 0.004 180);
-  --popover-foreground: oklch(0.18 0.006 180);
-  --primary: oklch(0.6 0.15 185);
-  --primary-foreground: oklch(0.995 0.004 180);
-  --secondary: oklch(0.945 0.008 180);
-  --secondary-foreground: oklch(0.4 0.08 182);
-  --muted: oklch(0.945 0.006 180);
-  --muted-foreground: oklch(0.48 0.012 182);
-  --accent: color-mix(in oklch, var(--primary) 12%, var(--background));
-  --accent-foreground: oklch(0.18 0.006 180);
+  /* Soft-UI palette: slate-tinted canvas, pure-white cards, low-saturation
+   * indigo primary. Hue 270 replaces the old cyan (185) so accents read as
+   * friendly indigo rather than technical teal. */
+  --background: oklch(0.972 0.005 265);
+  --foreground: oklch(0.25 0.02 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.25 0.02 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.25 0.02 265);
+  --primary: oklch(0.55 0.15 270);
+  --primary-foreground: oklch(0.995 0.004 270);
+  --secondary: oklch(0.955 0.008 265);
+  --secondary-foreground: oklch(0.42 0.06 268);
+  --muted: oklch(0.958 0.006 265);
+  --muted-foreground: oklch(0.52 0.015 265);
+  --accent: color-mix(in oklch, var(--primary) 10%, var(--background));
+  --accent-foreground: oklch(0.25 0.02 265);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --success: oklch(0.596 0.145 163.225);
@@ -132,30 +132,30 @@ For commercial licensing, please contact support@quantumnous.com
   --info-foreground: oklch(0.985 0 0);
   --neutral: oklch(0.708 0 0);
   --neutral-foreground: oklch(0.145 0 0);
-  --border: oklch(0.885 0.008 180);
-  --input: oklch(0.885 0.008 180);
-  --ring: oklch(0.6 0.13 184);
+  --border: oklch(0.9 0.01 265);
+  --input: oklch(0.9 0.01 265);
+  --ring: oklch(0.55 0.13 270);
   /* Chart palette anchored on the quantum-cyan primary, with adjacent hues
    * for multi-series contrast. chart-3/5 stay cooler for data legibility and
    * never appear as interface chrome. */
-  --chart-1: oklch(0.6 0.15 185);
+  --chart-1: oklch(0.6 0.15 270);
   --chart-2: oklch(0.62 0.14 160);
   --chart-3: oklch(0.6 0.13 205);
   --chart-4: oklch(0.62 0.16 150);
   --chart-5: oklch(0.65 0.12 230);
-  --overview-accent-1: oklch(0.6 0.15 185);
+  --overview-accent-1: oklch(0.6 0.15 270);
   --overview-accent-2: oklch(0.62 0.14 160);
   --overview-accent-3: oklch(0.6 0.13 205);
   --sidebar: color-mix(in oklch, var(--foreground) 0.5%, var(--background));
-  --sidebar-foreground: oklch(0.18 0.006 180);
-  --sidebar-primary: oklch(0.55 0.16 183);
-  --sidebar-primary-foreground: oklch(0.995 0.004 180);
+  --sidebar-foreground: oklch(0.25 0.02 265);
+  --sidebar-primary: oklch(0.5 0.15 270);
+  --sidebar-primary-foreground: oklch(0.995 0.004 270);
   --sidebar-accent: color-mix(in oklch, var(--primary) 12%, var(--background));
-  --sidebar-accent-foreground: oklch(0.45 0.1 185);
-  --sidebar-border: oklch(0.885 0.008 180);
-  --sidebar-ring: oklch(0.6 0.13 184);
-  --skeleton-base: oklch(0.945 0.006 180);
-  --skeleton-highlight: oklch(0.985 0.002 180);
+  --sidebar-accent-foreground: oklch(0.45 0.08 270);
+  --sidebar-border: oklch(0.9 0.01 265);
+  --sidebar-ring: oklch(0.55 0.13 270);
+  --skeleton-base: oklch(0.95 0.006 265);
+  --skeleton-highlight: oklch(0.985 0.002 265);
   --table-row: var(--background);
   --table-header: color-mix(
     in oklch,
@@ -193,20 +193,20 @@ For commercial licensing, please contact support@quantumnous.com
   /* OpenAI-like dark mode with a crisp charcoal canvas. */
   /* Quantum-cyan dark: deep charcoal canvas with a faint cyan undertone.
    * The primary lifts to a luminous cyan that reads as self-lit on dark. */
-  --background: oklch(0.17 0.01 185);
-  --foreground: oklch(0.93 0.012 180);
-  --card: oklch(0.235 0.015 185);
-  --card-foreground: oklch(0.93 0.012 180);
-  --popover: oklch(0.255 0.013 185);
-  --popover-foreground: oklch(0.93 0.012 180);
-  --primary: oklch(0.75 0.15 185);
-  --primary-foreground: oklch(0.16 0.015 185);
-  --secondary: oklch(0.3 0.015 183);
-  --secondary-foreground: oklch(0.85 0.04 182);
-  --muted: oklch(0.3 0.012 184);
-  --muted-foreground: oklch(0.68 0.014 182);
+  --background: oklch(0.17 0.015 265);
+  --foreground: oklch(0.93 0.01 265);
+  --card: oklch(0.235 0.015 265);
+  --card-foreground: oklch(0.93 0.01 265);
+  --popover: oklch(0.255 0.013 265);
+  --popover-foreground: oklch(0.93 0.01 265);
+  --primary: oklch(0.75 0.14 270);
+  --primary-foreground: oklch(0.16 0.015 270);
+  --secondary: oklch(0.3 0.015 265);
+  --secondary-foreground: oklch(0.85 0.03 268);
+  --muted: oklch(0.3 0.012 265);
+  --muted-foreground: oklch(0.68 0.014 265);
   --accent: color-mix(in oklch, var(--primary) 20%, var(--background));
-  --accent-foreground: oklch(0.93 0.012 180);
+  --accent-foreground: oklch(0.93 0.01 265);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0 0);
   --success: oklch(0.696 0.17 162.48);
@@ -219,22 +219,22 @@ For commercial licensing, please contact support@quantumnous.com
   --neutral-foreground: oklch(0.155 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 17%);
-  --ring: oklch(0.75 0.13 184);
-  --chart-1: oklch(0.75 0.15 185);
+  --ring: oklch(0.75 0.13 270);
+  --chart-1: oklch(0.75 0.14 270);
   --chart-2: oklch(0.72 0.14 160);
   --chart-3: oklch(0.7 0.13 205);
   --chart-4: oklch(0.72 0.16 150);
   --chart-5: oklch(0.75 0.12 230);
-  --sidebar: oklch(0.155 0.008 184);
-  --sidebar-foreground: oklch(0.92 0.012 180);
-  --sidebar-primary: oklch(0.7 0.15 183);
-  --sidebar-primary-foreground: oklch(0.16 0.015 185);
+  --sidebar: oklch(0.155 0.01 265);
+  --sidebar-foreground: oklch(0.92 0.01 265);
+  --sidebar-primary: oklch(0.72 0.14 270);
+  --sidebar-primary-foreground: oklch(0.16 0.015 270);
   --sidebar-accent: color-mix(in oklch, var(--primary) 20%, var(--background));
-  --sidebar-accent-foreground: oklch(0.85 0.04 182);
+  --sidebar-accent-foreground: oklch(0.85 0.03 268);
   --sidebar-border: oklch(1 0 0 / 11%);
-  --sidebar-ring: oklch(0.78 0.13 184);
-  --skeleton-base: oklch(0.3 0.012 184);
-  --skeleton-highlight: oklch(0.4 0.014 184);
+  --sidebar-ring: oklch(0.78 0.13 270);
+  --skeleton-base: oklch(0.3 0.012 265);
+  --skeleton-highlight: oklch(0.4 0.014 265);
   --table-row: var(--background);
   --table-header: color-mix(in oklch, var(--foreground) 6%, var(--background));
   --table-header-hover: color-mix(

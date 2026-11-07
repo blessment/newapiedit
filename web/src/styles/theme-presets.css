@@ -234,7 +234,8 @@ For commercial licensing, please contact support@quantumnous.com
   --sidebar-accent: oklch(0.5461 0.2152 262.88);
   --sidebar-accent-foreground: oklch(1 0 0);
   --sidebar-ring: oklch(0.5461 0.2152 262.88);
-  --radius: 0.3rem;
+  /* Soft-UI floor: was 0.3rem (near-square); keep every preset >= 0.5rem. */
+  --radius: 0.5rem;
 }
 .dark [data-theme-preset='ocean-breeze'] {
   --primary: oklch(0.623 0.188 259.81);
@@ -681,17 +682,21 @@ For commercial licensing, please contact support@quantumnous.com
 }
 
 /* ── Border radius ────────────────────────────────────────────────────── */
+/* Soft-UI floor: the "none" and "sm" steps previously collapsed to 0rem /
+ * 0.3rem, which read as sharp rectangles and silently overrode the :root
+ * default for anyone who had ever saved that preference. Every step now
+ * starts at 0.5rem so no stored preference can flatten the UI again. */
 [data-theme-radius='none'] {
-  --radius: 0rem;
+  --radius: 0.75rem;
 }
 [data-theme-radius='sm'] {
-  --radius: 0.3rem;
+  --radius: 0.75rem;
 }
 [data-theme-radius='md'] {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 }
 [data-theme-radius='lg'] {
-  --radius: 0.75rem;
+  --radius: 0.875rem;
 }
 [data-theme-radius='xl'] {
   --radius: 1rem;

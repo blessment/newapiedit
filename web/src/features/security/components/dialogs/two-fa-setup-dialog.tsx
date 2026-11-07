@@ -108,7 +108,7 @@ export function TwoFASetupDialog(props: TwoFASetupDialogProps) {
         )}
         {props.initializing && (
           <div className='flex flex-col items-center justify-center gap-3 py-8'>
-            <div className='border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent' />
+            <div className='border-primary/30 h-8 w-8 animate-spin rounded-full border-[3px] border-t-primary' />
             <div className='text-muted-foreground text-sm'>
               {t('Setting up 2FA...')}
             </div>

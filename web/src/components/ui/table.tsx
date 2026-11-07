@@ -44,7 +44,7 @@ function Table({
   return (
     <div
       data-slot='table-container'
-      className='relative w-full overflow-x-auto overflow-y-hidden'
+      className='relative w-full overflow-x-auto overflow-y-hidden rounded-lg'
     >
       {table}
     </div>
