@@ -95,7 +95,10 @@ For commercial licensing, please contact support@quantumnous.com
 }
 
 :root {
-  --radius: 1rem;
+  // Default radius tuned for an admin console: shadcn-classic 0.5rem keeps
+  // buttons/inputs/cards clearly rounded without the chunky 1rem look that
+  // made several form controls and buttons feel oversized.
+  --radius: 0.5rem;
   --app-header-height: 3rem;
   /* Static build-channel fallback consumed when JS hasn't booted yet. */
   --app-rev: '2k6e8r7p';
