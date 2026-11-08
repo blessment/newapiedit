@@ -111,7 +111,7 @@ export function PlaygroundInput({
           value={text}
         />
 
-        <PromptInputFooter className='border-border/60 bg-muted/20 dark:bg-muted/10 border-t px-3 py-2.5 backdrop-blur'>
+        <PromptInputFooter className='border-t border-border bg-transparent px-3 py-2'>
           <PlaygroundInputControls
             disabled={disabled}
             groups={groups}
