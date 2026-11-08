@@ -250,7 +250,7 @@ export function SidebarModulesCard() {
           return (
             <div
               key={section.key}
-              className='bg-background/60 rounded-xl border p-3'
+              className='bg-muted/30 rounded-md p-3'
             >
               <div className='flex items-start justify-between gap-3'>
                 <div className='min-w-0'>
@@ -268,7 +268,7 @@ export function SidebarModulesCard() {
                 {section.modules.map((mod) => (
                   <div
                     key={mod.key}
-                    className={`flex min-h-16 items-center justify-between rounded-lg border p-3 ${
+                    className={`flex min-h-14 items-center justify-between rounded-md px-3 py-2.5 ${
                       sectionEnabled ? '' : 'opacity-50'
                     }`}
                   >

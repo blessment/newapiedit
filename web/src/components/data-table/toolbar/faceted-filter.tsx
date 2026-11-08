@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { type Column } from '@tanstack/react-table'
-import { Check as CheckIcon, PlusCircle as PlusCircledIcon } from 'lucide-react'
+import { Check as CheckIcon, ListFilter as ListFilterIcon } from 'lucide-react'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -81,10 +81,10 @@ function DataTableFacetedFilterInner<TData, TValue>({
     <Popover>
       <PopoverTrigger
         render={
-          <Button variant='outline' size='sm' className='h-8 border-dashed' />
+          <Button variant='outline' size='sm' className='h-8 gap-1.5 rounded-md text-[12.5px]' />
         }
       >
-        <PlusCircledIcon className='size-4' />
+        <ListFilterIcon className='text-muted-foreground size-3.5' />
         {title}
         {selectedValues?.size > 0 && (
           <>

@@ -55,6 +55,7 @@ export function SettingsFormGrid(props: SettingsFormGridProps) {
       className={cn(
         'grid min-w-0 gap-x-5 gap-y-6 lg:grid-cols-2',
         'lg:[&>[data-settings-form-span=full]]:col-span-2',
+        'lg:[&>*:has(textarea)]:col-span-2',
         '[&>[data-slot=form-item]]:min-w-0',
         'lg:[&>[data-slot=form-item]:has(textarea)]:col-span-2',
         'lg:[&>[data-slot=form-item]:has([data-slot=switch])]:col-span-2',
@@ -161,7 +162,7 @@ export function SettingsControlGroup({
     <div
       data-settings-form-span='full'
       className={cn(
-        'bg-muted/20 min-w-0 space-y-3 rounded-xl border px-3 py-2.5',
+        'bg-muted/25 min-w-0 space-y-2.5 rounded-md px-3 py-2.5',
         className
       )}
       {...props}
@@ -188,6 +189,7 @@ export function SettingsForm({ className, ...props }: ComponentProps<'form'>) {
         'grid min-w-0 gap-x-5 gap-y-6 lg:grid-cols-2',
         'lg:[&>*:not([data-slot=form-item])]:col-span-2',
         'lg:[&>[data-settings-form-span=full]]:col-span-2',
+        'lg:[&>*:has(textarea)]:col-span-2',
         'lg:[&>[data-slot=alert]]:col-span-2',
         '[&>[data-slot=form-item]]:min-w-0',
         'lg:[&>[data-slot=form-item]:has(textarea)]:col-span-2',

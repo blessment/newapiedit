@@ -42,15 +42,15 @@ export function Features(_props: FeaturesProps) {
         'Optimized network architecture ensures millisecond response times'
       ),
       span: 'md:col-span-2',
-      tone: 'bg-info/10 ring-info/15',
-      icon: <Zap className='size-4 text-info' />,
+      tone: 'bg-muted border border-border',
+      icon: <Zap className='size-4 text-foreground/70' />,
       visual: (
         <div className='mt-4 grid grid-cols-3 gap-2'>
           {['OpenAI', 'Claude', 'Gemini', 'DeepSeek', 'Qwen', 'Llama'].map(
             (name) => (
               <div
                 key={name}
-                className='border-border/30 bg-muted/20 text-muted-foreground flex items-center justify-center rounded-lg border px-3 py-2 text-xs transition-colors duration-300 hover:border-info/30 hover:bg-info/5'
+                className='border-border/70 text-muted-foreground flex items-center justify-center rounded-md border px-3 py-2 font-mono text-[11px]'
               >
                 {name}
               </div>
@@ -67,20 +67,20 @@ export function Features(_props: FeaturesProps) {
         'Enterprise-grade security with comprehensive permission management'
       ),
       span: 'md:col-span-1',
-      tone: 'bg-success/10 ring-success/15',
-      icon: <Shield className='size-4 text-success' />,
+      tone: 'bg-muted border border-border',
+      icon: <Shield className='size-4 text-foreground/70' />,
       visual: (
         <div className='mt-4 flex items-center justify-center'>
           <div className='relative'>
-            <div className='flex size-16 items-center justify-center rounded-2xl border border-success/20 bg-success/5'>
+            <div className='bg-muted/60 flex size-16 items-center justify-center rounded-lg border border-border'>
               <Shield
-                className='size-7 text-success/70'
+                className='text-foreground/40 size-7'
                 strokeWidth={1.5}
               />
             </div>
-            <div className='absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-success'>
+            <div className='bg-card absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full border border-border'>
               <svg
-                className='size-2.5 text-white'
+                className='text-foreground/60 size-2.5'
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
@@ -103,8 +103,8 @@ export function Features(_props: FeaturesProps) {
       title: t('Global Coverage'),
       desc: t('Multi-region deployment for stable global access'),
       span: 'md:col-span-1',
-      tone: 'bg-violet-500/10 ring-violet-500/15',
-      icon: <Globe className='size-4 text-violet-400' />,
+      tone: 'bg-muted border border-border',
+      icon: <Globe className='size-4 text-foreground/70' />,
       visual: (
         <div className='mt-4 space-y-2'>
           {[t('Load Balancing'), t('Rate Limiting'), t('Cost Tracking')].map(
@@ -113,7 +113,7 @@ export function Features(_props: FeaturesProps) {
                 <div
                   className={`flex size-6 items-center justify-center rounded-full text-[10px] font-bold ${
                     i === 1
-                      ? 'border border-info/30 bg-info/20 text-info'
+                      ? 'border border-primary/30 bg-primary/10 text-primary'
                       : 'border-border/40 bg-muted text-muted-foreground border'
                   }`}
                 >
@@ -133,8 +133,8 @@ export function Features(_props: FeaturesProps) {
       title: t('Developer Friendly'),
       desc: t('Compatible API routes for common AI application workflows'),
       span: 'md:col-span-2',
-      tone: 'bg-warning/10 ring-warning/15',
-      icon: <Code className='size-4 text-warning' />,
+      tone: 'bg-muted border border-border',
+      icon: <Code className='size-4 text-foreground/70' />,
       visual: (
         <div className='mt-4 flex items-center gap-3'>
           <div className='flex -space-x-2'>
@@ -148,7 +148,7 @@ export function Features(_props: FeaturesProps) {
             ))}
           </div>
           <div className='text-muted-foreground flex items-center gap-1.5 text-xs'>
-            <Code className='size-3.5 text-info' />
+            <Code className='size-3.5 text-muted-foreground' />
             {t('Multi-protocol Compatible')}
           </div>
         </div>
@@ -160,45 +160,48 @@ export function Features(_props: FeaturesProps) {
   return (
     <section className='relative z-10 px-6 py-24 md:py-32'>
       <div className='mx-auto max-w-6xl'>
-        <AnimateInView className='mb-16 max-w-lg'>
-          <p className='text-muted-foreground mb-3 text-xs font-medium tracking-widest uppercase'>
+        <AnimateInView className='mb-12 max-w-xl'>
+          <p className='text-muted-foreground mb-3 font-mono text-[10.5px] font-medium tracking-[0.18em] uppercase'>
             {t('Core Features')}
           </p>
-          <h2 className='text-2xl leading-tight font-bold tracking-tight md:text-3xl'>
+          <h2 className='text-[26px] leading-[1.2] font-semibold tracking-[-0.03em] md:text-[30px]'>
             {t('Built for developers,')}
             <br />
-            {t('designed for scale')}
+            <span className='text-muted-foreground/70'>
+              {t('designed for scale')}
+            </span>
           </h2>
         </AnimateInView>
 
-        {/* Soft-UI bento: independent raised cards, wide gutters */}
-        <div className='grid gap-6 md:grid-cols-3 md:gap-8'>
+        {/* Flat bento: hairlines instead of shadows, one neutral icon per card. */}
+        <div className='grid gap-4 md:grid-cols-3'>
           {features.map((f, i) => (
             <AnimateInView
               key={f.id}
               delay={i * 100}
               animation='scale-in'
-              className={`bg-card ring-foreground/6 group relative rounded-xl p-7 shadow-lg shadow-foreground/6 ring-1 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-foreground/8 md:p-8 ${f.span}`}
+              className={`bg-card group relative rounded-lg border border-border p-6 transition-colors duration-200 hover:border-foreground/20 md:p-7 ${f.span}`}
             >
-              <span className='text-muted-foreground/40 absolute top-6 right-6 text-[10px] font-semibold tabular-nums'>
+              <span className='text-muted-foreground/40 absolute top-6 right-6 font-mono text-[10px] font-medium tabular-nums'>
                 {f.num}
               </span>
               <div className='mb-4 flex items-center gap-3'>
                 <span
-                  className={`flex size-10 items-center justify-center rounded-full ring-1 ${f.tone}`}
+                  className={`flex size-9 items-center justify-center rounded-md ${f.tone}`}
                 >
                   {f.icon}
                 </span>
-                <h3 className='text-sm font-semibold'>{f.title}</h3>
+                <h3 className='text-[13.5px] font-semibold tracking-[-0.005em]'>
+                  {f.title}
+                </h3>
               </div>
-              <p className='text-muted-foreground text-sm leading-relaxed'>
+              <p className='text-muted-foreground max-w-[46ch] text-[13px] leading-relaxed'>
                 {f.desc}
               </p>
               {f.visual}
             </AnimateInView>
           ))}
         </div>
-
       </div>
     </section>
   )

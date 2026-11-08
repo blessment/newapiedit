@@ -27,10 +27,9 @@ export function Header({ className, children, ...props }: HeaderProps) {
       className={cn(
         // Position stays sticky above scrolling content.
         'sticky top-0 z-40 h-[var(--app-header-height,3rem)] w-full shrink-0',
-        // Frosted glass to match the sidebar rail: translucent fill so page
-        // content scrolls through beneath, plus a hairline bottom
-        // edge that stays legible over bright and dark content alike.
-        'bg-background/72 border-b border-border/50 backdrop-blur-[16px]',
+        // Flat command bar: opaque, hairline-separated, no blur. Content
+        // scrolling under a translucent header made the type muddy.
+        'bg-background border-b border-border',
         className
       )}
       {...props}

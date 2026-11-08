@@ -151,13 +151,15 @@ function SplitHeaderTableView<TData>({
           style={tableSizing.style}
         >
           {tableSizing.colgroup}
-          <DataTableHeader
-            table={props.table}
-            applyHeaderSize={props.applyHeaderSize}
-            className={cn('sticky top-0 z-10', props.tableHeaderClassName)}
-            rowClassName={props.tableHeaderRowClassName}
-            getColumnClassName={getColumnClassName}
-          />
+          {!(rows.length === 0 && !props.isLoading) && (
+            <DataTableHeader
+              table={props.table}
+              applyHeaderSize={props.applyHeaderSize}
+              className={cn('sticky top-0 z-10', props.tableHeaderClassName)}
+              rowClassName={props.tableHeaderRowClassName}
+              getColumnClassName={getColumnClassName}
+            />
+          )}
           {renderTableBody(props, rows, colSpan, getColumnClassName)}
         </Table>
       </div>

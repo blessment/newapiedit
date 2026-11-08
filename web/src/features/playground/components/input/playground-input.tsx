@@ -96,7 +96,7 @@ export function PlaygroundInput({
     <div className='grid shrink-0 gap-4 px-1 md:pb-4'>
       <PromptInput
         className='relative'
-        groupClassName='bg-background/95 dark:bg-background/80 border-border/70 shadow-lg shadow-foreground/8 ring-1 ring-foreground/5 rounded-xl overflow-hidden transition-all duration-300 focus-within:border-primary/35 focus-within:ring-primary/15 focus-within:shadow-xl focus-within:shadow-primary/15'
+        groupClassName='bg-card border border-border rounded-lg overflow-hidden transition-colors duration-150 focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/15'
         onSubmit={handleSubmit}
       >
         <PromptInputTextarea
@@ -111,7 +111,7 @@ export function PlaygroundInput({
           value={text}
         />
 
-        <PromptInputFooter className='border-border/60 bg-muted/20 dark:bg-muted/10 border-t px-3 py-2.5 backdrop-blur'>
+        <PromptInputFooter className='border-t border-border bg-transparent px-3 py-2'>
           <PlaygroundInputControls
             disabled={disabled}
             groups={groups}

@@ -395,6 +395,11 @@ function renderPagination<TData>(
     return null
   }
 
+  // Nothing to page through: the pager would only add noise under an empty state.
+  if (props.table.getFilteredRowModel().rows.length === 0) {
+    return null
+  }
+
   const pagination = (
     <DataTablePagination
       table={props.table}
@@ -550,6 +555,7 @@ function renderDesktop<TData>(
       pinnedColumns={props.pinnedColumns}
       containerClassName={cn(
         fixedHeight && 'min-h-0 flex-1',
+        'overflow-hidden rounded-lg border border-border bg-card',
         'transition-opacity duration-150',
         isFetchingOnly && 'pointer-events-none opacity-60',
         props.tableClassName

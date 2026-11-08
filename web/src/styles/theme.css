@@ -94,167 +94,154 @@ For commercial licensing, please contact support@quantumnous.com
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ==========================================================================
+   Precision UI — a quiet, high-contrast surface system.
+
+   Rules of the house:
+   1. Surfaces are flat. Canvas (cool off-white) → surface (pure white) →
+      raised layer (popover/dialog). A 1px hairline does the separating work
+      that shadows used to do. Shadows are reserved for *floating* layers only.
+   2. One accent hue (277°, indigo) carries every interactive and data signal.
+      Everything else is a neutral with a 265° tint, so nothing fights.
+   3. Corners are small and consistent: 8px surfaces, 6px controls, 10px panels.
+   4. Numerals are tabular wherever data appears — columns must line up.
+   ========================================================================== */
 :root {
-  /* Soft-UI scale (option B): controls 12px, cards ~17px, panels ~22px.
-   * rounded-lg = 0.75rem, rounded-xl = 1.05rem, rounded-2xl = 1.35rem. */
-  --radius: 0.75rem;
-  --app-header-height: 3rem;
+  --radius: 0.5rem;
+  --app-header-height: 2.75rem;
   /* Static build-channel fallback consumed when JS hasn't booted yet. */
-  --app-rev: '2k6e8r7p';
-  /* Auto starts with the browser font, including before JS applies the
-   * saved preference. Explicit Sans selects Public Sans in theme-presets.css. */
-  --font-ui-sans: sans-serif;
+  --app-rev: 'precision-1';
+  /* Public Sans for Latin, the platform CJK face for Chinese/Japanese/Korean.
+   * Explicit CJK fallbacks keep Han glyphs from landing on a random serif. */
+  --font-ui-sans:
+    'Public Sans Variable', 'Public Sans', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    'Noto Sans SC', 'Noto Sans TC', 'Noto Sans JP', sans-serif;
   --font-body: var(--font-ui-sans);
-  /* Soft-UI palette: slate-tinted canvas, pure-white cards, low-saturation
-   * indigo primary. Hue 270 replaces the old cyan (185) so accents read as
-   * friendly indigo rather than technical teal. */
-  --background: oklch(0.972 0.005 265);
-  --foreground: oklch(0.25 0.02 265);
+
+  /* Neutral ramp — cool, low chroma, no visible blue cast. */
+  --background: oklch(0.982 0.0015 265);
+  --foreground: oklch(0.205 0.006 265);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.02 265);
+  --card-foreground: oklch(0.205 0.006 265);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.02 265);
-  --primary: oklch(0.55 0.15 270);
-  --primary-foreground: oklch(0.995 0.004 270);
-  --secondary: oklch(0.955 0.008 265);
-  --secondary-foreground: oklch(0.42 0.06 268);
-  --muted: oklch(0.958 0.006 265);
-  --muted-foreground: oklch(0.52 0.015 265);
-  --accent: color-mix(in oklch, var(--primary) 10%, var(--background));
-  --accent-foreground: oklch(0.25 0.02 265);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --success: oklch(0.596 0.145 163.225);
-  --success-foreground: oklch(0.985 0 0);
-  --warning: oklch(0.681 0.162 75.834);
-  --warning-foreground: oklch(0.145 0 0);
-  --info: oklch(0.588 0.158 241.966);
-  --info-foreground: oklch(0.985 0 0);
-  --neutral: oklch(0.708 0 0);
-  --neutral-foreground: oklch(0.145 0 0);
-  --border: oklch(0.9 0.01 265);
-  --input: oklch(0.9 0.01 265);
-  --ring: oklch(0.55 0.13 270);
-  /* Chart palette anchored on the quantum-cyan primary, with adjacent hues
-   * for multi-series contrast. chart-3/5 stay cooler for data legibility and
-   * never appear as interface chrome. */
-  --chart-1: oklch(0.6 0.15 270);
-  --chart-2: oklch(0.62 0.14 160);
-  --chart-3: oklch(0.6 0.13 205);
-  --chart-4: oklch(0.62 0.16 150);
-  --chart-5: oklch(0.65 0.12 230);
-  --overview-accent-1: oklch(0.6 0.15 270);
-  --overview-accent-2: oklch(0.62 0.14 160);
-  --overview-accent-3: oklch(0.6 0.13 205);
-  --sidebar: color-mix(in oklch, var(--foreground) 0.5%, var(--background));
-  --sidebar-foreground: oklch(0.25 0.02 265);
-  --sidebar-primary: oklch(0.5 0.15 270);
-  --sidebar-primary-foreground: oklch(0.995 0.004 270);
-  --sidebar-accent: color-mix(in oklch, var(--primary) 12%, var(--background));
-  --sidebar-accent-foreground: oklch(0.45 0.08 270);
-  --sidebar-border: oklch(0.9 0.01 265);
-  --sidebar-ring: oklch(0.55 0.13 270);
-  --skeleton-base: oklch(0.95 0.006 265);
-  --skeleton-highlight: oklch(0.985 0.002 265);
-  --table-row: var(--background);
-  --table-header: color-mix(
-    in oklch,
-    var(--foreground) 1.5%,
-    var(--background)
-  );
-  --table-header-hover: color-mix(
-    in oklch,
-    var(--foreground) 3%,
-    var(--background)
-  );
-  /* Disabled rows: kept subtle so they read as "quiet", not as a colored
-     alert state. */
-  --table-disabled: color-mix(
-    in oklch,
-    var(--foreground) 3%,
-    var(--background)
-  );
-  --table-disabled-hover: color-mix(
-    in oklch,
-    var(--foreground) 4.5%,
-    var(--background)
-  );
-  --table-disabled-border: color-mix(
-    in oklch,
-    var(--foreground) 16%,
-    var(--background)
-  );
+  --popover-foreground: oklch(0.205 0.006 265);
+
+  --primary: oklch(0.52 0.165 277);
+  --primary-foreground: oklch(0.995 0.002 277);
+  --secondary: oklch(0.962 0.002 265);
+  --secondary-foreground: oklch(0.34 0.008 265);
+  --muted: oklch(0.962 0.002 265);
+  --muted-foreground: oklch(0.535 0.006 265);
+  --accent: oklch(0.955 0.008 277);
+  --accent-foreground: oklch(0.34 0.05 277);
+
+  --destructive: oklch(0.565 0.196 27);
+  --destructive-foreground: oklch(0.995 0 0);
+  --success: oklch(0.545 0.125 162);
+  --success-foreground: oklch(0.995 0 0);
+  --warning: oklch(0.655 0.145 72);
+  --warning-foreground: oklch(0.16 0 0);
+  --info: oklch(0.545 0.135 250);
+  --info-foreground: oklch(0.995 0 0);
+  --neutral: oklch(0.66 0.004 265);
+  --neutral-foreground: oklch(0.995 0 0);
+
+  /* Hairlines: one step darker than the canvas, never darker than 0.90 L. */
+  --border: oklch(0.912 0.003 265);
+  --input: oklch(0.895 0.004 265);
+  --ring: oklch(0.52 0.165 277);
+
+  /* Data palette: one accent + four low-chroma partners. Charts read as a
+   * set, and none of them is ever used as interface chrome. */
+  --chart-1: oklch(0.52 0.165 277);
+  --chart-2: oklch(0.6 0.115 195);
+  --chart-3: oklch(0.7 0.13 78);
+  --chart-4: oklch(0.6 0.145 15);
+  --chart-5: oklch(0.58 0.13 315);
+  --overview-accent-1: var(--chart-1);
+  --overview-accent-2: var(--chart-2);
+  --overview-accent-3: var(--chart-3);
+
+  /* Navigation rail sits one step *below* the canvas so the content pane
+   * reads as the bright, focused surface. */
+  --sidebar: oklch(0.968 0.002 265);
+  --sidebar-foreground: oklch(0.3 0.007 265);
+  --sidebar-primary: oklch(0.52 0.165 277);
+  --sidebar-primary-foreground: oklch(0.995 0.002 277);
+  --sidebar-accent: oklch(0.935 0.004 265);
+  --sidebar-accent-foreground: oklch(0.2 0.006 265);
+  --sidebar-border: oklch(0.912 0.003 265);
+  --sidebar-ring: oklch(0.52 0.165 277);
+
+  --skeleton-base: oklch(0.955 0.002 265);
+  --skeleton-highlight: oklch(0.99 0.001 265);
+
+  --table-row: var(--card);
+  --table-header: oklch(0.972 0.002 265);
+  --table-header-hover: oklch(0.958 0.002 265);
+  --table-disabled: oklch(0.975 0.002 265);
+  --table-disabled-hover: oklch(0.965 0.002 265);
+  --table-disabled-border: oklch(0.9 0.003 265);
 }
 
 .dark {
-  /* Native controls follow the theme; Dark Reader also reads this to detect
-     the built-in dark theme. */
   color-scheme: dark;
-  /* OpenAI-like dark mode with a crisp charcoal canvas. */
-  /* Quantum-cyan dark: deep charcoal canvas with a faint cyan undertone.
-   * The primary lifts to a luminous cyan that reads as self-lit on dark. */
-  --background: oklch(0.17 0.015 265);
-  --foreground: oklch(0.93 0.01 265);
-  --card: oklch(0.235 0.015 265);
-  --card-foreground: oklch(0.93 0.01 265);
-  --popover: oklch(0.255 0.013 265);
-  --popover-foreground: oklch(0.93 0.01 265);
-  --primary: oklch(0.75 0.14 270);
-  --primary-foreground: oklch(0.16 0.015 270);
-  --secondary: oklch(0.3 0.015 265);
-  --secondary-foreground: oklch(0.85 0.03 268);
-  --muted: oklch(0.3 0.012 265);
-  --muted-foreground: oklch(0.68 0.014 265);
-  --accent: color-mix(in oklch, var(--primary) 20%, var(--background));
-  --accent-foreground: oklch(0.93 0.01 265);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --success: oklch(0.696 0.17 162.48);
-  --success-foreground: oklch(0.145 0 0);
-  --warning: oklch(0.769 0.188 70.08);
-  --warning-foreground: oklch(0.145 0 0);
-  --info: oklch(0.613 0.14 239.919);
-  --info-foreground: oklch(0.145 0 0);
-  --neutral: oklch(0.76 0 0);
-  --neutral-foreground: oklch(0.155 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 17%);
-  --ring: oklch(0.75 0.13 270);
-  --chart-1: oklch(0.75 0.14 270);
-  --chart-2: oklch(0.72 0.14 160);
-  --chart-3: oklch(0.7 0.13 205);
-  --chart-4: oklch(0.72 0.16 150);
-  --chart-5: oklch(0.75 0.12 230);
-  --sidebar: oklch(0.155 0.01 265);
-  --sidebar-foreground: oklch(0.92 0.01 265);
-  --sidebar-primary: oklch(0.72 0.14 270);
-  --sidebar-primary-foreground: oklch(0.16 0.015 270);
-  --sidebar-accent: color-mix(in oklch, var(--primary) 20%, var(--background));
-  --sidebar-accent-foreground: oklch(0.85 0.03 268);
-  --sidebar-border: oklch(1 0 0 / 11%);
-  --sidebar-ring: oklch(0.78 0.13 270);
-  --skeleton-base: oklch(0.3 0.012 265);
-  --skeleton-highlight: oklch(0.4 0.014 265);
-  --table-row: var(--background);
-  --table-header: color-mix(in oklch, var(--foreground) 6%, var(--background));
-  --table-header-hover: color-mix(
-    in oklch,
-    var(--foreground) 9%,
-    var(--background)
-  );
-  --table-disabled: color-mix(
-    in oklch,
-    var(--foreground) 7%,
-    var(--background)
-  );
-  --table-disabled-hover: color-mix(
-    in oklch,
-    var(--foreground) 9.5%,
-    var(--background)
-  );
-  --table-disabled-border: color-mix(
-    in oklch,
-    var(--foreground) 24%,
-    var(--background)
-  );
+  /* Canvas drops to near-black; cards lift one step so panels still read as
+   * surfaces without a single shadow being drawn. */
+  --background: oklch(0.145 0.004 265);
+  --foreground: oklch(0.925 0.003 265);
+  --card: oklch(0.188 0.004 265);
+  --card-foreground: oklch(0.925 0.003 265);
+  --popover: oklch(0.2 0.004 265);
+  --popover-foreground: oklch(0.925 0.003 265);
+
+  --primary: oklch(0.68 0.155 277);
+  --primary-foreground: oklch(0.14 0.01 277);
+  --secondary: oklch(0.258 0.004 265);
+  --secondary-foreground: oklch(0.92 0.004 265);
+  --muted: oklch(0.252 0.004 265);
+  --muted-foreground: oklch(0.762 0.006 265);
+  --accent: oklch(0.26 0.02 277);
+  --accent-foreground: oklch(0.9 0.01 277);
+
+  --destructive: oklch(0.66 0.185 25);
+  --destructive-foreground: oklch(0.14 0 0);
+  --success: oklch(0.68 0.14 162);
+  --success-foreground: oklch(0.14 0 0);
+  --warning: oklch(0.76 0.15 72);
+  --warning-foreground: oklch(0.14 0 0);
+  --info: oklch(0.68 0.13 250);
+  --info-foreground: oklch(0.14 0 0);
+  --neutral: oklch(0.55 0.004 265);
+  --neutral-foreground: oklch(0.93 0 0);
+
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 19%);
+  --ring: oklch(0.68 0.155 277);
+
+  --chart-1: oklch(0.7 0.15 277);
+  --chart-2: oklch(0.72 0.115 195);
+  --chart-3: oklch(0.78 0.13 78);
+  --chart-4: oklch(0.68 0.14 15);
+  --chart-5: oklch(0.7 0.12 315);
+
+  --sidebar: oklch(0.128 0.003 265);
+  --sidebar-foreground: oklch(0.82 0.004 265);
+  --sidebar-primary: oklch(0.68 0.155 277);
+  --sidebar-primary-foreground: oklch(0.14 0.01 277);
+  --sidebar-accent: oklch(1 0 0 / 7%);
+  --sidebar-accent-foreground: oklch(0.97 0.003 265);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.68 0.155 277);
+
+  --skeleton-base: oklch(0.235 0.004 265);
+  --skeleton-highlight: oklch(0.3 0.005 265);
+
+  --table-row: var(--card);
+  --table-header: oklch(0.196 0.004 265);
+  --table-header-hover: oklch(0.225 0.004 265);
+  --table-disabled: oklch(0.16 0.004 265);
+  --table-disabled-hover: oklch(0.185 0.004 265);
+  --table-disabled-border: oklch(1 0 0 / 18%);
 }
