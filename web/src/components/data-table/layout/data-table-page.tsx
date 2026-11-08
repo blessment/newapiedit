@@ -395,6 +395,11 @@ function renderPagination<TData>(
     return null
   }
 
+  // Nothing to page through: the pager would only add noise under an empty state.
+  if (props.table.getFilteredRowModel().rows.length === 0) {
+    return null
+  }
+
   const pagination = (
     <DataTablePagination
       table={props.table}

@@ -266,7 +266,7 @@ export function SummaryCards() {
               </p>
             </div>
           </div>
-          <StaggerContainer className='grid grid-cols-3 gap-1.5 sm:gap-3'>
+          <StaggerContainer className='grid grid-cols-2 gap-1.5 sm:grid-cols-3 sm:gap-3'>
             {items.map((it) => (
               <StaggerItem
                 key={it.key}

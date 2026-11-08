@@ -73,7 +73,7 @@ export function PerformanceHealthPanel() {
       </div>
 
       <div className='space-y-3 p-4 sm:p-5'>
-        <div className='grid grid-cols-3 gap-2'>
+        <div className='grid grid-cols-2 gap-2 sm:grid-cols-3'>
           <MetricCell
             icon={HeartPulse}
             label={t('Success rate')}
