@@ -550,6 +550,7 @@ function renderDesktop<TData>(
       pinnedColumns={props.pinnedColumns}
       containerClassName={cn(
         fixedHeight && 'min-h-0 flex-1',
+        'overflow-hidden rounded-lg border border-border bg-card',
         'transition-opacity duration-150',
         isFetchingOnly && 'pointer-events-none opacity-60',
         props.tableClassName

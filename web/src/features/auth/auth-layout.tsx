@@ -26,38 +26,129 @@ type AuthLayoutProps = {
   children: React.ReactNode
 }
 
+const PROVIDERS = ['OpenAI', 'Anthropic', 'Gemini', 'DeepSeek', 'Qwen']
+
+const SNIPPET = `curl $NEW_API/v1/chat/completions \\
+  -H "Authorization: Bearer $KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "gpt-4o",
+    "messages": [{"role":"user","content":"hi"}]
+  }'`
+
+/**
+ * Split auth shell.
+ *
+ * Left: a narrow, typographically quiet form column pinned to the optical
+ * centre of the viewport. Right: a fixed dark proof panel that shows what the
+ * product actually is — one endpoint, many upstreams — instead of decorative
+ * gradients. The panel is deliberately theme-independent: it is the brand
+ * surface and stays dark in both modes.
+ */
 export function AuthLayout({ children }: AuthLayoutProps) {
   const { t } = useTranslation()
   const { systemName, logo, loading } = useSystemConfig()
 
   return (
-    <div className='relative grid h-svh max-w-none'>
-      <Link
-        to='/'
-        className='absolute top-4 left-4 z-10 flex items-center gap-2 transition-opacity hover:opacity-80 sm:top-8 sm:left-8'
-      >
-        <div className='relative h-8 w-8'>
+    <div className='grid min-h-svh grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,44%)]'>
+      <div className='flex min-h-svh flex-col px-6 pt-8 pb-8 sm:px-10'>
+        <Link
+          to='/'
+          className='inline-flex w-fit items-center gap-2.5 transition-opacity hover:opacity-70'
+        >
+          <div className='relative size-7'>
+            {loading ? (
+              <Skeleton className='absolute inset-0 rounded-md' />
+            ) : (
+              <img
+                src={logo}
+                alt={t('Logo')}
+                className='size-7 rounded-md object-cover'
+              />
+            )}
+          </div>
           {loading ? (
-            <Skeleton className='absolute inset-0 rounded-full' />
+            <Skeleton className='h-5 w-24' />
           ) : (
-            <img
-              src={logo}
-              alt={t('Logo')}
-              className='h-8 w-8 rounded-full object-cover'
-            />
+            <span className='text-[15px] font-semibold tracking-[-0.01em]'>
+              {systemName}
+            </span>
           )}
+        </Link>
+
+        <div className='flex flex-1 items-center justify-center py-12'>
+          <div className='w-full max-w-[340px]'>{children}</div>
         </div>
-        {loading ? (
-          <Skeleton className='h-6 w-24' />
-        ) : (
-          <h1 className='text-xl font-medium'>{systemName}</h1>
-        )}
-      </Link>
-      <div className='container flex items-center pt-16 sm:pt-0'>
-        <div className='mx-auto flex w-full flex-col justify-center space-y-2 px-4 py-8 sm:w-[480px] sm:p-8'>
-          {children}
-        </div>
+
+        <p className='text-muted-foreground/70 text-[11px] tracking-wide'>
+          {systemName} · {t('All rights reserved')}
+        </p>
       </div>
+
+      <aside
+        aria-hidden
+        className='relative hidden overflow-hidden border-l border-border bg-[oklch(0.185_0.007_265)] lg:flex lg:flex-col lg:justify-center lg:px-14'
+      >
+        {/* One indigo bloom, one hairline grid. Nothing else. */}
+        <div
+          className='pointer-events-none absolute inset-0'
+          style={{
+            background:
+              'radial-gradient(120% 80% at 15% 0%, oklch(0.52 0.165 277 / 0.35) 0%, transparent 55%)',
+          }}
+        />
+        <div
+          className='pointer-events-none absolute inset-0 opacity-[0.06]'
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)',
+            backgroundSize: '56px 56px',
+            maskImage:
+              'radial-gradient(100% 70% at 50% 30%, #000 0%, transparent 90%)',
+          }}
+        />
+
+        <div className='relative'>
+          <p className='font-mono text-[11px] tracking-[0.2em] text-white/40 uppercase'>
+            {t('AI Gateway')}
+          </p>
+          <h2 className='mt-5 text-[32px] leading-[1.15] font-semibold tracking-[-0.035em] text-white'>
+            {t('One endpoint.')}
+            <br />
+            <span className='text-white/45'>{t('Every model you trust.')}</span>
+          </h2>
+          <p className='mt-5 max-w-[38ch] text-[13.5px] leading-relaxed text-white/55'>
+            {t(
+              'Route, meter and govern every request across your upstream providers — from a single, standard API.'
+            )}
+          </p>
+
+          <div className='mt-9 overflow-hidden rounded-lg border border-white/10 bg-black/40'>
+            <div className='flex items-center gap-1.5 border-b border-white/10 px-3.5 py-2'>
+              <span className='size-2 rounded-full bg-white/15' />
+              <span className='size-2 rounded-full bg-white/15' />
+              <span className='size-2 rounded-full bg-white/15' />
+              <span className='ml-2 font-mono text-[10.5px] tracking-wide text-white/35'>
+                request.sh
+              </span>
+            </div>
+            <pre className='overflow-x-auto px-3.5 py-3.5 font-mono text-[11.5px] leading-[1.8] text-white/70'>
+              {SNIPPET}
+            </pre>
+          </div>
+
+          <div className='mt-8 flex flex-wrap gap-x-5 gap-y-2'>
+            {PROVIDERS.map((provider) => (
+              <span
+                key={provider}
+                className='font-mono text-[11px] tracking-wide text-white/35'
+              >
+                {provider}
+              </span>
+            ))}
+          </div>
+        </div>
+      </aside>
     </div>
   )
 }
