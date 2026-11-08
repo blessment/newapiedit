@@ -24,14 +24,14 @@ export function RouteLoadingFallback({ className }: { className?: string }) {
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className='bg-card rounded-xl border p-4 shadow-xs'
+            className='bg-card rounded-lg border border-border p-4'
           >
             <Skeleton className='h-3.5 w-2/5' />
             <Skeleton className='mt-3 h-7 w-3/5' />
           </div>
         ))}
       </div>
-      <div className='bg-card mt-4 flex-1 rounded-xl border p-4 shadow-xs'>
+      <div className='bg-card mt-4 flex-1 rounded-lg border border-border p-4'>
         <Skeleton className='h-4 w-1/4' />
         <div className='mt-4 flex flex-col gap-3'>
           {Array.from({ length: 6 }).map((_, i) => (

@@ -122,7 +122,7 @@ export function Hero(props: HeroProps) {
         className='landing-animate-fade-up relative mx-auto mt-12 w-full max-w-[980px] opacity-0 md:mt-14'
         style={{ animationDelay: '300ms' }}
       >
-        <div className='bg-card overflow-hidden rounded-xl border border-border shadow-[0_24px_60px_-24px_rgb(0_0_0/0.22)]'>
+        <div className='bg-card overflow-hidden rounded-lg border border-border shadow-[0_24px_60px_-24px_rgb(0_0_0/0.22)]'>
           {/* Window chrome */}
           <div className='border-border bg-muted/40 flex h-9 items-center gap-2 border-b px-3.5'>
             <span className='bg-foreground/10 size-2 rounded-full' />

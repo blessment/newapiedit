@@ -115,9 +115,9 @@ export function Rankings() {
 function RankingsLoading() {
   return (
     <div className='space-y-6'>
-      <Skeleton className='h-[420px] w-full rounded-xl' />
-      <Skeleton className='h-[360px] w-full rounded-xl' />
-      <Skeleton className='h-[180px] w-full rounded-xl' />
+      <Skeleton className='h-[420px] w-full rounded-lg' />
+      <Skeleton className='h-[360px] w-full rounded-lg' />
+      <Skeleton className='h-[180px] w-full rounded-lg' />
     </div>
   )
 }
@@ -125,7 +125,7 @@ function RankingsLoading() {
 function RankingsError(props: { message: string }) {
   const { t } = useTranslation()
   return (
-    <div className='bg-card rounded-xl border border-dashed px-6 py-12 text-center'>
+    <div className='bg-card rounded-lg border border-dashed px-6 py-12 text-center'>
       <h2 className='text-foreground text-base font-semibold'>
         {t('Unable to load rankings')}
       </h2>

@@ -420,7 +420,7 @@ export function FloatingWindow(props: FloatingWindowProps) {
         maxHeight: `calc(100vh - ${VIEWPORT_MARGIN * 2}px)`,
       }}
       className={cn(
-        'bg-background border-border z-50 flex flex-col overflow-hidden rounded-xl border shadow-xl',
+        'bg-background border-border z-50 flex flex-col overflow-hidden rounded-lg border border-border shadow-xl',
         props.className
       )}
     >

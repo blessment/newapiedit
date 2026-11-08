@@ -72,7 +72,7 @@ export function Features(_props: FeaturesProps) {
       visual: (
         <div className='mt-4 flex items-center justify-center'>
           <div className='relative'>
-            <div className='bg-muted/60 flex size-16 items-center justify-center rounded-xl border border-border'>
+            <div className='bg-muted/60 flex size-16 items-center justify-center rounded-lg border border-border'>
               <Shield
                 className='text-foreground/40 size-7'
                 strokeWidth={1.5}
