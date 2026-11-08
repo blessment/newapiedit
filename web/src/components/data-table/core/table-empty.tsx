@@ -71,17 +71,19 @@ export function TableEmpty({
     description ?? t('No records found. Try adjusting your filters.')
   return (
     <TableRow>
-      <TableCell colSpan={colSpan} className='h-[400px] p-0'>
-        <Empty>
-          <EmptyHeader>
-            <EmptyMedia variant='icon'>
-              {icon || <Database className='size-6' />}
-            </EmptyMedia>
-            <EmptyTitle>{resolvedTitle}</EmptyTitle>
-            <EmptyDescription>{resolvedDescription}</EmptyDescription>
-          </EmptyHeader>
-          {children}
-        </Empty>
+      <TableCell colSpan={colSpan} className='p-0'>
+        <div className='flex h-[340px] items-center justify-center p-4'>
+          <Empty className='border-border/70 h-full w-full border border-dashed'>
+            <EmptyHeader>
+              <EmptyMedia variant='icon'>
+                {icon || <Database className='size-6' />}
+              </EmptyMedia>
+              <EmptyTitle>{resolvedTitle}</EmptyTitle>
+              <EmptyDescription>{resolvedDescription}</EmptyDescription>
+            </EmptyHeader>
+            {children}
+          </Empty>
+        </div>
       </TableCell>
     </TableRow>
   )
