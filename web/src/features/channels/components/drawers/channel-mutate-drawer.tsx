@@ -4534,11 +4534,12 @@ export function ChannelMutateDrawer({
                               </Button>
                             </div>
                           </div>
-                          <Input
+                          <Textarea
                             readOnly
                             value={channelKey ?? ''}
                             placeholder={t('Hidden — verify to reveal')}
-                            className='font-mono'
+                            className='font-mono min-h-20 resize-y whitespace-pre-wrap break-all'
+                            rows={4}
                           />
                         </div>
                       )}
