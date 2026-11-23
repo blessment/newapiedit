@@ -2848,7 +2848,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "相关项目",
     "footer.defaultCopyright": "版权所有。",
-    "footer.new\u0061pi.projectAttributionSuffix": "版权所有，由项目贡献者设计与开发。",
+    "footer.newapi.projectAttributionSuffix": "版权所有，由项目贡献者设计与开发。",
     "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.": "高级自定义渠道仅对 /v1/responses 且不做协议转换的路由生效。",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "对于 2025 年 5 月 10 日之后添加的渠道，在部署时无需从模型名称中移除 \".\"",
     "For private deployments, format: https://fastgpt.run/api/openapi": "对于私有部署，格式为：https://fastgpt.run/api/openapi",
@@ -6223,7 +6223,7 @@
     "Test models and prompts from the browser": "在浏览器中测试模型和提示词",
     "Test selected models": "测试所选模型",
     "Testing all enabled channels started. Please refresh to see results.": "测试所有启用的渠道已开始。请刷新以查看结果。",
-    "Testing...": "测试中...",
+    "Testing...": "测试中…",
     "Text": "文本",
     "Text description of the desired image": "想要生成图像的文字描述",
     "Text description of the desired video": "想要生成视频的文字描述",
@@ -6716,7 +6716,7 @@
     "Unauthorized, invalid user info": "无权进行此操作，用户信息无效",
     "Unauthorized, not logged in and no access token provided": "无权进行此操作，未登录且未提供 access token",
     "Unauthorized, the access token has expired": "访问令牌已过期",
-    "Unavailable": "无法展示",
+    "Unavailable": "不可用",
     "Unbind": "解绑",
     "Unbind failed": "解绑失败",
     "Unbound {{provider}}": "已解绑 {{provider}}",
@@ -7373,6 +7373,8 @@
     "Zhipu": "智谱",
     "Zhipu GLM": "智谱GLM",
     "Zhipu V4": "智谱 V4",
-    "Zoom": "缩放"
+    "Zoom": "缩放",
+    "Test Result": "测试结果",
+    "Failed to test key": "测试密钥失败"
   }
 }

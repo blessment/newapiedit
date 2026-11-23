@@ -843,6 +843,87 @@ func buildTestRequest(model string, endpointType string, channel *model.Channel,
 	return testRequest
 }
 
+// TestChannelKey tests a single key of a multi-key channel.
+// It clones the channel, pins the selected key as the channel's only key,
+// and reuses the standard channel test pipeline.
+func TestChannelKey(c *gin.Context) {
+	channelId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	keyIndex, err := strconv.Atoi(c.Param("key_index"))
+	if err != nil || keyIndex < 0 {
+		common.ApiErrorT(c, "Invalid key index")
+		return
+	}
+	channel, err := model.CacheGetChannel(channelId)
+	if err != nil {
+		channel, err = model.GetChannelById(channelId, true)
+		if err != nil {
+			common.ApiError(c, err)
+			return
+		}
+	}
+	if !channel.ChannelInfo.IsMultiKey {
+		common.ApiErrorT(c, "Channel is not in multi-key mode")
+		return
+	}
+	keys := channel.GetKeys()
+	if keyIndex >= len(keys) {
+		common.ApiErrorT(c, "Key index out of range")
+		return
+	}
+	targetKey := keys[keyIndex]
+	if targetKey == "" {
+		common.ApiErrorT(c, "Selected key is empty")
+		return
+	}
+
+	// Shallow copy the channel and pin the selected key as the only key so
+	// that GetNextEnabledKey returns it directly.
+	keyChannel := *channel
+	keyChannel.Key = targetKey
+	keyChannel.Keys = nil
+	keyChannel.ChannelInfo.IsMultiKey = false
+
+	testModel := c.Query("model")
+	endpointType := c.Query("endpoint_type")
+	isStream, _ := strconv.ParseBool(c.Query("stream"))
+	testUserID, err := resolveChannelTestUserID(c)
+	if err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	requestCtx := context.Background()
+	if c.Request != nil {
+		requestCtx = c.Request.Context()
+	}
+	tik := time.Now()
+	result := testChannel(requestCtx, &keyChannel, testUserID, testModel, endpointType, isStream)
+	tok := time.Now()
+	consumedTime := float64(tok.Sub(tik).Milliseconds()) / 1000.0
+	if result.localErr != nil {
+		resp := gin.H{
+			"success":    false,
+			"message":    result.localErr.Error(),
+			"time":       0.0,
+			"key_index":  keyIndex,
+		}
+		if result.newAPIError != nil {
+			resp["error_code"] = result.newAPIError.GetErrorCode()
+		}
+		c.JSON(http.StatusOK, resp)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"success":   true,
+		"message":   "",
+		"time":      consumedTime,
+		"key_index": keyIndex,
+	})
+}
+
 func TestChannel(c *gin.Context) {
 	channelId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

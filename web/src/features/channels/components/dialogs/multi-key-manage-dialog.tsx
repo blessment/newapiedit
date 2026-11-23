@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { useQueryClient } from '@tanstack/react-query'
-import { Loader2, RefreshCw, Trash2, Power, PowerOff } from 'lucide-react'
+import { Loader2, RefreshCw, Trash2, Power, PowerOff, FlaskConical } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -53,6 +53,7 @@ import {
   enableAllMultiKeys,
   disableAllMultiKeys,
   deleteDisabledMultiKeys,
+  testChannelKey,
 } from '../../api'
 import { MULTI_KEY_FILTER_OPTIONS } from '../../constants'
 import {
@@ -66,6 +67,12 @@ import type { KeyStatus, MultiKeyConfirmAction } from '../../types'
 import { useChannels } from '../channels-provider'
 import { StatisticsCard } from './multi-key-statistics-card'
 import { MultiKeyTableRowActions } from './multi-key-table-row-actions'
+
+type KeyTestState = {
+  status: 'loading' | 'success' | 'error'
+  message?: string
+  time?: number
+}
 
 type MultiKeyManageDialogProps = {
   open: boolean
@@ -103,11 +110,90 @@ export function MultiKeyManageDialog({
     useState<MultiKeyConfirmAction | null>(null)
   const [isPerformingAction, setIsPerformingAction] = useState(false)
 
+  // Per-key test results: keyed by global key index (survives pagination)
+  const [testResults, setTestResults] = useState<
+    Record<number, KeyTestState>
+  >({})
+
+  const handleTestKey = async (keyIndex: number) => {
+    if (!currentRow) return
+    setTestResults((prev) => ({
+      ...prev,
+      [keyIndex]: { status: 'loading' },
+    }))
+    try {
+      const response = await testChannelKey(currentRow.id, keyIndex)
+      setTestResults((prev) => ({
+        ...prev,
+        [keyIndex]: response.success
+          ? { status: 'success', time: response.time }
+          : {
+              status: 'error',
+              message:
+                response.message ||
+                getServerMessage(response) ||
+                t('Test failed'),
+            },
+      }))
+    } catch (error: unknown) {
+      handleServerError(error, t('Failed to test key'))
+      setTestResults((prev) => ({
+        ...prev,
+        [keyIndex]: { status: 'error', message: t('Test failed') },
+      }))
+    }
+  }
+
+  const renderTestResult = (keyIndex: number) => {
+    const result = testResults[keyIndex]
+    if (!result) {
+      return (
+        <span className='text-muted-foreground text-xs'>—</span>
+      )
+    }
+    if (result.status === 'loading') {
+      return (
+        <span className='flex items-center gap-1.5 text-xs text-blue-600 dark:text-blue-400'>
+          <Loader2 className='h-3 w-3 animate-spin' />
+          {t('Testing...')}
+        </span>
+      )
+    }
+    if (result.status === 'success') {
+      return (
+        <span className='flex items-center gap-1.5 text-xs font-medium text-green-600 dark:text-green-400'>
+          <span className='h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-400' />
+          {t('Available')}
+          {typeof result.time === 'number' && result.time > 0 && (
+            <span className='text-muted-foreground font-normal'>
+              · {result.time.toFixed(2)}s
+            </span>
+          )}
+        </span>
+      )
+    }
+    return (
+      <span
+        className='flex items-center gap-1.5 text-xs font-medium text-red-600 dark:text-red-400'
+        title={result.message}
+      >
+        <span className='h-1.5 w-1.5 rounded-full bg-red-600 dark:bg-red-400' />
+        {t('Unavailable')}
+        {result.message && (
+          <span className='text-muted-foreground max-w-[160px] truncate font-normal'>
+            · {result.message}
+          </span>
+        )}
+      </span>
+    )
+  }
+
   // Reset and load data when dialog opens
   useEffect(() => {
     if (open && currentRow) {
       setCurrentPage(1)
       setStatusFilter(null)
+      setTestResults({})
       loadKeyStatus(1, pageSize, null)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -405,6 +491,12 @@ export function MultiKeyManageDialog({
                     cell: (key) => renderStatusBadge(key.status),
                   },
                   {
+                    id: 'test-result',
+                    header: t('Test Result'),
+                    className: 'w-40',
+                    cell: (key) => renderTestResult(key.index),
+                  },
+                  {
                     id: 'reason',
                     header: t('Disabled Reason'),
                     className: 'min-w-[200px]',
@@ -423,12 +515,31 @@ export function MultiKeyManageDialog({
                     header: t('Actions'),
                     className: 'text-right',
                     cell: (key) => (
-                      <MultiKeyTableRowActions
-                        keyIndex={key.index}
-                        status={key.status}
-                        canDelete={canEditSensitive}
-                        onAction={setConfirmAction}
-                      />
+                      <div className='flex items-center justify-end gap-1'>
+                        <Button
+                          type='button'
+                          variant='outline'
+                          size='sm'
+                          className='h-7 gap-1 px-2 text-xs'
+                          onClick={() => handleTestKey(key.index)}
+                          disabled={
+                            testResults[key.index]?.status === 'loading'
+                          }
+                        >
+                          {testResults[key.index]?.status === 'loading' ? (
+                            <Loader2 className='h-3.5 w-3.5 animate-spin' />
+                          ) : (
+                            <FlaskConical className='h-3.5 w-3.5' />
+                          )}
+                          {t('Test')}
+                        </Button>
+                        <MultiKeyTableRowActions
+                          keyIndex={key.index}
+                          status={key.status}
+                          canDelete={canEditSensitive}
+                          onAction={setConfirmAction}
+                        />
+                      </div>
                     ),
                   },
                 ]}

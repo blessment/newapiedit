@@ -207,6 +207,14 @@ export interface ChannelTestResponse {
   }
 }
 
+export interface ChannelKeyTestResponse {
+  success: boolean
+  message?: string
+  error_code?: string
+  time?: number
+  key_index?: number
+}
+
 export interface ChannelBalanceResponse {
   success: boolean
   message?: string

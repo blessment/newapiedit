@@ -30,6 +30,7 @@ import type {
   ChannelBalanceResponse,
   ChannelOpsResponse,
   ChannelTestResponse,
+  ChannelKeyTestResponse,
   CopyChannelParams,
   CopyChannelResponse,
   FetchModelsResponse,
@@ -288,6 +289,21 @@ export async function testChannel(
 ): Promise<ChannelTestResponse> {
   const res = await api.get(
     `/api/channel/test/${id}`,
+    channelActionConfig({ params })
+  )
+  return res.data
+}
+
+/**
+ * Test a single key of a multi-key channel
+ */
+export async function testChannelKey(
+  id: number,
+  keyIndex: number,
+  params?: { model?: string; endpoint_type?: string; stream?: boolean }
+): Promise<ChannelKeyTestResponse> {
+  const res = await api.get(
+    `/api/channel/test/${id}/key/${keyIndex}`,
     channelActionConfig({ params })
   )
   return res.data
